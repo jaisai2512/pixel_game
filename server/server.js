@@ -30,7 +30,7 @@ const io = new Server(server, {
         methods: ["GET", "POST"],
         credentials: true,
     },
-    transports: ["websocket", "polling"], // important for Railway proxy
+    transports: ["polling","websocket",], // important for Railway proxy
 });
 
 /* ─────────────────────────────────────────────── */
