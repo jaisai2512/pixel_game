@@ -21,11 +21,12 @@ export class NetworkManager {
 
     connect() {
         console.log("Connecting to server...");
-        this.socket = io(import.meta.env.VITE_SERVER_URL, {
+        this.socket = io(import.meta.env.VITE_SERVER_URL || "http://localhost:3000", {
             auth: {
                 token: this.token,
             },
-            transports: ["websocket"],
+            transports: ["polling"],  // polling only — no websocket
+            upgrade: false,           // prevent upgrading to websocket
         });
 
         this.socket.on("connect", () => {
@@ -50,7 +51,7 @@ export class NetworkManager {
         let lastMove = 0;
         EventBus.on("player:moved", (data) => {
             const now = Date.now();
-            if (now - lastMove > 50) { // 50ms = 20 updates/sec
+            if (now - lastMove > 50) {
                 lastMove = now;
                 this.socket?.emit("playermove", data);
             }
