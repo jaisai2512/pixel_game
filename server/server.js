@@ -75,14 +75,10 @@ io.on("connection", (socket) => {
             y:    Math.random() * 500,
         };
 
-        // Send all existing players to the new client
         socket.emit("allplayers", players);
-
-        // Notify everyone else about the new player
         socket.broadcast.emit("addspirit", players[socket.id]);
     });
 
-    // Handle movement — update position and broadcast to everyone else
     socket.on("playermove", (data) => {
         if (players[socket.id]) {
             players[socket.id].x = data.x;
@@ -103,6 +99,9 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
+// ─── Use Railway's dynamic PORT or fallback to 3000 locally ───────────────────
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
