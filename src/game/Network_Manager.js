@@ -25,6 +25,7 @@ export class NetworkManager {
             auth: {
                 token: this.token,
             },
+            transports: ["websocket"],
         });
 
         this.socket.on("connect", () => {
