@@ -21,7 +21,7 @@ export class NetworkManager {
 
     connect() {
         console.log("Connecting to server...");
-        this.socket = io("http://localhost:3000", {
+        this.socket = io(import.meta.env.VITE_SERVER_URL, {
             auth: {
                 token: this.token,
             },
